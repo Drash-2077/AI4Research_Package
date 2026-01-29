@@ -1,7 +1,7 @@
 [
     {
         "domain": ".bilibili.com",
-        "expirationDate": 1800943365,
+        "expirationDate": 1800903344,
         "hostOnly": false,
         "httpOnly": false,
         "name": "CURRENT_QUALITY",
@@ -10,7 +10,7 @@
         "secure": false,
         "session": false,
         "storeId": null,
-        "value": "80"
+        "value": "0"
     },
     {
         "domain": ".bilibili.com",
@@ -22,11 +22,11 @@
         "secure": false,
         "session": true,
         "storeId": null,
-        "value": "58F02842_19BFE247E54"
+        "value": "352D9E3F_19C00E3B727"
     },
     {
         "domain": ".bilibili.com",
-        "expirationDate": 1801031358,
+        "expirationDate": 1801077444,
         "hostOnly": false,
         "httpOnly": false,
         "name": "theme-tip-show",
@@ -39,7 +39,7 @@
     },
     {
         "domain": ".bilibili.com",
-        "expirationDate": 1801031358,
+        "expirationDate": 1801077444,
         "hostOnly": false,
         "httpOnly": false,
         "name": "home_feed_column",
@@ -52,7 +52,20 @@
     },
     {
         "domain": ".bilibili.com",
-        "expirationDate": 1804055363.157801,
+        "expirationDate": 1804088336.86644,
+        "hostOnly": false,
+        "httpOnly": false,
+        "name": "LIVE_BUVID",
+        "path": "/",
+        "sameSite": null,
+        "secure": false,
+        "session": false,
+        "storeId": null,
+        "value": "AUTO1417695283360086"
+    },
+    {
+        "domain": ".bilibili.com",
+        "expirationDate": 1804101449.512688,
         "hostOnly": false,
         "httpOnly": false,
         "name": "buvid4",
@@ -61,11 +74,11 @@
         "secure": false,
         "session": false,
         "storeId": null,
-        "value": "1CF8A396-3ED6-B465-07A0-09F4E8A7759037789-024101208-F8+W9nn8zxfnzn4ZSEuCBmKS0tuVErryWs7URHV6NSQgF8N0wFK6pDBBSY+gttPI"
+        "value": "E3ECFDB7-1EB7-1445-6CE9-EA86DF81EA5096493-025112312-FnMDzdUR2WDExFpKh719Hw%3D%3D"
     },
     {
         "domain": ".bilibili.com",
-        "expirationDate": 1801030204,
+        "expirationDate": 1801077227,
         "hostOnly": false,
         "httpOnly": false,
         "name": "CURRENT_FNVAL",
@@ -74,11 +87,11 @@
         "secure": false,
         "session": false,
         "storeId": null,
-        "value": "2000"
+        "value": "4048"
     },
     {
         "domain": ".bilibili.com",
-        "expirationDate": 1800423344.936146,
+        "expirationDate": 1800898345.461695,
         "hostOnly": false,
         "httpOnly": false,
         "name": "buvid3",
@@ -87,11 +100,24 @@
         "secure": false,
         "session": false,
         "storeId": null,
-        "value": "C55FD91F-812B-E36E-1E59-F7D88721F98844405infoc"
+        "value": "0B900CC7-CB37-82B7-05A4-518BE21D664E45335infoc"
     },
     {
         "domain": ".bilibili.com",
-        "expirationDate": 1784439406.451809,
+        "expirationDate": 1784920233.20818,
+        "hostOnly": false,
+        "httpOnly": false,
+        "name": "sid",
+        "path": "/",
+        "sameSite": "no_restriction",
+        "secure": true,
+        "session": false,
+        "storeId": null,
+        "value": "5lc1lz33"
+    },
+    {
+        "domain": ".bilibili.com",
+        "expirationDate": 1784920233.207955,
         "hostOnly": false,
         "httpOnly": true,
         "name": "SESSDATA",
@@ -100,11 +126,11 @@
         "secure": true,
         "session": false,
         "storeId": null,
-        "value": "e4173a48%2C1784439406%2C8d8d2%2A11CjDkBxg_wAfgWg4NcdQjGTlkqfXK5waOBCe_6-vzsi24HPcQgvkTrvfnYe28Zf0rSKISVkRqd1dicXFlNF9rTUZHZC14TkRXRU8taVhWdzlmVGE0MnVHYXZ4TTd3eTYwaXpnby0yNm9Mck9ZaE96R3ZiandINWZqWTFzVGJDNGdyRXZZSVdtZG93IIEC"
+        "value": "9b79239e%2C1784920233%2Cd664d%2A12CjB2PRfiQdWzClKTWjJSHIp3jh02AiCX3tzETA4sj6qMzpw67AeQ70uQG6dU3lksV50SVllvZm1mbUZWMTJVZ0cyZDBSR1RSS3ZadkxBN05EOWVDRnFLek1QbmJXT0JGQ1NTR0k4bGhPaXE1R05MbGNkajl4M2F2amVfZ2tFSmpQbk5ReW44RU93IIEC"
     },
     {
         "domain": ".bilibili.com",
-        "expirationDate": 1800943292,
+        "expirationDate": 1800969739,
         "hostOnly": false,
         "httpOnly": false,
         "name": "theme-avatar-tip-show",
@@ -117,7 +143,7 @@
     },
     {
         "domain": ".bilibili.com",
-        "expirationDate": 1800423344.93622,
+        "expirationDate": 1800898345.461797,
         "hostOnly": false,
         "httpOnly": false,
         "name": "b_nut",
@@ -126,11 +152,11 @@
         "secure": false,
         "session": false,
         "storeId": null,
-        "value": "1768887344"
+        "value": "1769362345"
     },
     {
         "domain": ".bilibili.com",
-        "expirationDate": 1800423345,
+        "expirationDate": 1800898345,
         "hostOnly": false,
         "httpOnly": false,
         "name": "_uuid",
@@ -139,11 +165,11 @@
         "secure": false,
         "session": false,
         "storeId": null,
-        "value": "96D32DD3-FA87-A2110-FA91-16BB39C46F3945073infoc"
+        "value": "E71073CD7-32A2-FA4C-E3CE-A518371049107345581infoc"
     },
     {
         "domain": ".bilibili.com",
-        "expirationDate": 1784439406.452058,
+        "expirationDate": 1784920233.208067,
         "hostOnly": false,
         "httpOnly": false,
         "name": "bili_jct",
@@ -152,11 +178,11 @@
         "secure": true,
         "session": false,
         "storeId": null,
-        "value": "1ca37bfe3b0fb200e0fe1d18b21af2dc"
+        "value": "b0b0e447aa2ac2f83dd094fb771b070b"
     },
     {
         "domain": ".bilibili.com",
-        "expirationDate": 1769657042,
+        "expirationDate": 1769787536,
         "hostOnly": false,
         "httpOnly": false,
         "name": "bili_ticket",
@@ -165,11 +191,11 @@
         "secure": false,
         "session": false,
         "storeId": null,
-        "value": "eyJhbGciOiJIUzI1NiIsImtpZCI6InMwMyIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Njk2NTcwNDIsImlhdCI6MTc2OTM5Nzc4MiwicGx0IjotMX0.eOw0yOrWjyQ3AKujRw71BAiUHkVB5OCwZOWdLRyT824"
+        "value": "eyJhbGciOiJIUzI1NiIsImtpZCI6InMwMyIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Njk3ODc1MzUsImlhdCI6MTc2OTUyODI3NSwicGx0IjotMX0.aqSbM1z3zZElcQa9ktAFy4mO6e-qttSvvF_HIiHax-M"
     },
     {
         "domain": ".bilibili.com",
-        "expirationDate": 1769657042,
+        "expirationDate": 1769787536,
         "hostOnly": false,
         "httpOnly": false,
         "name": "bili_ticket_expires",
@@ -178,7 +204,7 @@
         "secure": false,
         "session": false,
         "storeId": null,
-        "value": "1769656982"
+        "value": "1769787475"
     },
     {
         "domain": "www.bilibili.com",
@@ -202,11 +228,24 @@
         "secure": false,
         "session": true,
         "storeId": null,
-        "value": "i1.hdslb.com"
+        "value": "i0.hdslb.com"
     },
     {
         "domain": ".bilibili.com",
-        "expirationDate": 1801031358,
+        "expirationDate": 1772132963,
+        "hostOnly": false,
+        "httpOnly": false,
+        "name": "bp_t_offset_15141671",
+        "path": "/",
+        "sameSite": null,
+        "secure": false,
+        "session": false,
+        "storeId": null,
+        "value": "1162658650733412352"
+    },
+    {
+        "domain": ".bilibili.com",
+        "expirationDate": 1801077444,
         "hostOnly": false,
         "httpOnly": false,
         "name": "browser_resolution",
@@ -215,11 +254,11 @@
         "secure": false,
         "session": false,
         "storeId": null,
-        "value": "1912-914"
+        "value": "2040-986"
     },
     {
         "domain": ".bilibili.com",
-        "expirationDate": 1803447346.91376,
+        "expirationDate": 1803922346.174083,
         "hostOnly": false,
         "httpOnly": false,
         "name": "buvid_fp",
@@ -228,11 +267,11 @@
         "secure": false,
         "session": false,
         "storeId": null,
-        "value": "d7e0d6e2607ab569856bc06b01628eb7"
+        "value": "d238b94339bef9135b983889870d3857"
     },
     {
         "domain": ".bilibili.com",
-        "expirationDate": 1784439406.452174,
+        "expirationDate": 1784920233.20811,
         "hostOnly": false,
         "httpOnly": false,
         "name": "DedeUserID",
@@ -245,7 +284,7 @@
     },
     {
         "domain": ".bilibili.com",
-        "expirationDate": 1784439406.452272,
+        "expirationDate": 1784920233.208146,
         "hostOnly": false,
         "httpOnly": false,
         "name": "DedeUserID__ckMd5",
@@ -258,7 +297,20 @@
     },
     {
         "domain": ".bilibili.com",
-        "expirationDate": 1803447372.834768,
+        "expirationDate": 1804088336.344698,
+        "hostOnly": false,
+        "httpOnly": false,
+        "name": "PVID",
+        "path": "/",
+        "sameSite": null,
+        "secure": false,
+        "session": false,
+        "storeId": null,
+        "value": "1"
+    },
+    {
+        "domain": ".bilibili.com",
+        "expirationDate": 1803927344.839526,
         "hostOnly": false,
         "httpOnly": false,
         "name": "rpdid",
@@ -267,6 +319,6 @@
         "secure": false,
         "session": false,
         "storeId": null,
-        "value": "|(J~JJuukR)Y0J'u~Y)))~J~k"
+        "value": "|(k|kmJulRJ~0J'u~YmJY~JRR"
     }
 ]

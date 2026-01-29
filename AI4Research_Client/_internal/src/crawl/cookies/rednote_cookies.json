@@ -1,7 +1,7 @@
 [
     {
         "domain": ".xiaohongshu.com",
-        "expirationDate": 1801104082,
+        "expirationDate": 1786270790,
         "hostOnly": false,
         "httpOnly": false,
         "name": "loadts",
@@ -10,11 +10,11 @@
         "secure": false,
         "session": false,
         "storeId": null,
-        "value": "1769568082966"
+        "value": "1754734790318"
     },
     {
         "domain": ".xiaohongshu.com",
-        "expirationDate": 1801104082,
+        "expirationDate": 1786270790,
         "hostOnly": false,
         "httpOnly": false,
         "name": "xsecappid",
@@ -27,7 +27,7 @@
     },
     {
         "domain": "www.xiaohongshu.com",
-        "expirationDate": 1769569764.161319,
+        "expirationDate": 1754736588.725146,
         "hostOnly": true,
         "httpOnly": true,
         "name": "acw_tc",
@@ -36,11 +36,11 @@
         "secure": false,
         "session": false,
         "storeId": null,
-        "value": "0a00db8717695679620161399e63104f9c4b9affd042c6b201758a69634008"
+        "value": "0a00d67e17547347887431113e02208e32340856b0d67e8c8fecd43a636eb5"
     },
     {
         "domain": ".xiaohongshu.com",
-        "expirationDate": 1769827166,
+        "expirationDate": 1754993992,
         "hostOnly": false,
         "httpOnly": false,
         "name": "websectiga",
@@ -49,7 +49,7 @@
         "secure": false,
         "session": false,
         "storeId": null,
-        "value": "3fff3a6f9f07284b62c0f2ebf91a3b10193175c06e4f71492b60e056edcdebb2"
+        "value": "2a3d3ea002e7d92b5c9743590ebd24010cf3710ff3af8029153751e41a6af4a3"
     },
     {
         "domain": ".xiaohongshu.com",
@@ -61,11 +61,11 @@
         "secure": false,
         "session": true,
         "storeId": null,
-        "value": "5.7.7"
+        "value": "4.75.3"
     },
     {
         "domain": ".xiaohongshu.com",
-        "expirationDate": 1769568570,
+        "expirationDate": 1754735397,
         "hostOnly": false,
         "httpOnly": false,
         "name": "sec_poison_id",
@@ -74,11 +74,11 @@
         "secure": false,
         "session": false,
         "storeId": null,
-        "value": "7fa72949-debf-4747-9762-5ed0dbe11363"
+        "value": "0ca381d8-c3b5-4039-88ca-6c30ce26ba8f"
     },
     {
         "domain": ".xiaohongshu.com",
-        "expirationDate": 1801104126.964057,
+        "expirationDate": 1786270823.22371,
         "hostOnly": false,
         "httpOnly": true,
         "name": "web_session",
@@ -87,11 +87,11 @@
         "secure": true,
         "session": false,
         "storeId": null,
-        "value": "040069b0aaffde122a3a153f4c3b4bdc9b3a8a"
+        "value": "040069b7087ef35d7f498e68a23a4b49182e96"
     },
     {
         "domain": ".xiaohongshu.com",
-        "expirationDate": 1804128086.163044,
+        "expirationDate": 1789294796.494295,
         "hostOnly": false,
         "httpOnly": false,
         "name": "gid",
@@ -100,11 +100,11 @@
         "secure": false,
         "session": false,
         "storeId": null,
-        "value": "yjS8JWY2Y2DiyjS8JWY4iT7Tq2xCjiCkkMFCW7S3u7My1728lKAy0K888q424jy8jKddJWDK"
+        "value": "yjYYd2Yyiy0dyjYYd2Y8KxCi0ddId4J36fuYv8KdUy2FEU281EAFCU888yWyyWW8j0WSq0S4"
     },
     {
         "domain": ".xiaohongshu.com",
-        "expirationDate": 1801103964,
+        "expirationDate": 1786270790,
         "hostOnly": false,
         "httpOnly": false,
         "name": "a1",
@@ -113,11 +113,11 @@
         "secure": false,
         "session": false,
         "storeId": null,
-        "value": "19c02784f35hx9fxggsrxizus1lo6q1abk7u6ukuc50000345491"
+        "value": "1988e5806aeene42imdz8ep15rwlwqrxahyppxf0650000171177"
     },
     {
         "domain": ".xiaohongshu.com",
-        "expirationDate": 1801103964.161382,
+        "expirationDate": 1786270788.725216,
         "hostOnly": false,
         "httpOnly": false,
         "name": "abRequestId",
@@ -126,20 +126,7 @@
         "secure": false,
         "session": false,
         "storeId": null,
-        "value": "85a2838b-9543-50df-a6b3-b472d5a06f9c"
-    },
-    {
-        "domain": ".xiaohongshu.com",
-        "expirationDate": 1801104126.964456,
-        "hostOnly": false,
-        "httpOnly": true,
-        "name": "id_token",
-        "path": "/",
-        "sameSite": null,
-        "secure": true,
-        "session": false,
-        "storeId": null,
-        "value": "VjEAAB03qmaUFr/xK7a5Evrsv9n05r/5jBwbc7SLta2H34CUaT8KO9bFvWnbyKY1mYy+eDohLeF33J3HSFUXx04Fy7OGZ3lyYdOSsFWeZzUN69eNXxwrOJxlCTgNHmiDFNJdJbTx"
+        "value": "f49f9cfe-0c2c-5dfe-a333-22fa84aae808"
     },
     {
         "domain": ".xiaohongshu.com",
@@ -151,11 +138,11 @@
         "secure": false,
         "session": true,
         "storeId": null,
-        "value": "{%22ub%22:%2269787292000000001a032f23%22%2C%22ue%22:%22696cbe56000000001a02d579%22%2C%22uc%22:33}"
+        "value": "{%22ub%22:%2268968841000000002501d292%22%2C%22ue%22:%226895edbc0000000023038c7e%22%2C%22uc%22:25}"
     },
     {
         "domain": ".xiaohongshu.com",
-        "expirationDate": 1801103964,
+        "expirationDate": 1786270790,
         "hostOnly": false,
         "httpOnly": false,
         "name": "webId",
@@ -164,6 +151,6 @@
         "secure": false,
         "session": false,
         "storeId": null,
-        "value": "910cb60db4d09a1d1fecba3a80127271"
+        "value": "3e264c2f847ac3b39b87a7f641e28571"
     }
 ]
