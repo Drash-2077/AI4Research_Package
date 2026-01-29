@@ -274,7 +274,7 @@
         const { Header, Sider, Content } = Layout;
         const { Title, Text } = Typography;
         const { Option } = Select;
-        const { Checkbox, Radio, Tabs, InputNumber, Modal } = antd;
+        const { Checkbox, Radio, Tabs, InputNumber, Modal, Tooltip, Badge } = antd;
         // DeleteOutlined is already in the destructured list from 'icons' above
         // We only need to add PlusOutlined if it's missing, but let's check the list above first.
         // The list above is: UploadOutlined, BarChartOutlined, FileTextOutlined, CloudUploadOutlined, ExperimentOutlined, RobotOutlined, PlayCircleOutlined, SaveOutlined, DeleteOutlined, SettingOutlined, GlobalOutlined, KeyOutlined, FileAddOutlined
@@ -2158,13 +2158,24 @@
                 message: ''
             });
 
-            const checkUpdate = () => {
+            const checkUpdate = (manual = false) => {
+                if (manual) message.loading("Checking for updates...", 0.5);
                 fetch('/api/version/check')
                     .then(r => r.json())
                     .then(data => {
                         setVersionInfo(prev => ({ ...prev, ...data }));
+                        if (manual) {
+                            if (data.has_update) {
+                                message.success("New version found!");
+                            } else {
+                                message.info("You are using the latest version.");
+                            }
+                        }
                     })
-                    .catch(err => console.error("Update check failed", err));
+                    .catch(err => {
+                        console.error("Update check failed", err);
+                        if (manual) message.error("Check failed");
+                    });
             };
 
             const startDownload = () => {
@@ -2876,9 +2887,17 @@
                             <div>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                                     <div style={{ fontWeight: 'bold', fontSize: 18, lineHeight: 1 }}>AI4Research</div>
-                                    <Tag color="default" style={{ margin: 0, fontSize: '10px', height: '18px', lineHeight: '16px' }}>
-                                        {versionInfo.current_version}
-                                    </Tag>
+                                    <Tooltip title={versionInfo.has_update ? "New version available! Click to update." : "Click to check for updates"}>
+                                        <Badge dot={versionInfo.has_update} offset={[-2, 2]}>
+                                            <Tag 
+                                                color="default" 
+                                                style={{ margin: 0, fontSize: '10px', height: '18px', lineHeight: '16px', cursor: 'pointer' }}
+                                                onClick={() => checkUpdate(true)}
+                                            >
+                                                {versionInfo.current_version}
+                                            </Tag>
+                                        </Badge>
+                                    </Tooltip>
                                     {versionInfo.has_update && versionInfo.status === 'idle' && (
                                         <Button 
                                             type="primary" 
