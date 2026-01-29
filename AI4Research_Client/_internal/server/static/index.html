@@ -2969,6 +2969,12 @@
                             {activeTab === 'acquisition' && (
                                 <div>
                                     <Title level={5}>{t.acq_title}</Title>
+                                    <antd.Alert
+                                        message="本软件仅供个人科学研究交流使用，滥用个人cookies大量抓取数据或下载视频导致的账户问题后果自付。"
+                                        type="warning"
+                                        showIcon
+                                        style={{ marginBottom: 16 }}
+                                    />
                                     <Form 
                                         layout="vertical" 
                                         form={crawlForm}
