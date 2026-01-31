@@ -1834,17 +1834,24 @@
         };
 
         // --- Analysis Panel Component ---
-        const AnalysisPanel = ({ selectedFile, t, previewData, currentQuota }) => {
+        const AnalysisPanel = ({ selectedFile, t, previewData, currentQuota, researchGoal, setResearchGoal, varDefs, setVarDefs }) => {
             const [mainCategory, setMainCategory] = useState('difference'); // difference, regression
             const [analysisType, setAnalysisType] = useState('t_test');
             const [loading, setLoading] = useState(false);
+            const [interpretLoading, setInterpretLoading] = useState(false);
+            const [analysisDone, setAnalysisDone] = useState(false);
             const [form] = Form.useForm();
 
-            // Reset form when type changes
+            // Reset form and status when type or file changes
             useEffect(() => {
                 form.resetFields();
-            }, [analysisType, mainCategory]);
+                setAnalysisDone(false);
+                // Hide previous interpretation
+                const interpContainer = document.getElementById('analysis-interpretation');
+                if (interpContainer) interpContainer.style.display = 'none';
+            }, [analysisType, mainCategory, selectedFile]);
 
+            // ... options ...
             const analysisOptions = {
                 difference: [
                     { value: 't_test', label: '独立样本 T 检验 (Independent T-test)' },
@@ -1883,6 +1890,65 @@
                 lmm: { req: "层级数据。需区分固定效应和随机效应。", ex: "教学法对成绩影响（班级为随机效应）" }
             };
 
+            const handleInterpret = async () => {
+                if (!selectedFile) return message.error("Please select a file first");
+                
+                try {
+                    const values = await form.validateFields();
+                    setInterpretLoading(true);
+                    
+                    // Show interpretation area
+                    const interpContainer = document.getElementById('analysis-interpretation');
+                    const interpContent = document.getElementById('analysis-interpretation-content');
+                    if (interpContainer) interpContainer.style.display = 'block';
+                    if (interpContent) interpContent.innerHTML = '<div style="color:#999">Thinking...</div>';
+                    
+                    const payload = {
+                        filename: selectedFile.name,
+                        analysis_type: analysisType,
+                        params: values,
+                        research_goal: researchGoal,
+                        variable_definitions: varDefs,
+                        thinking: true
+                    };
+                    
+                    const res = await fetch('/api/interpret/run_stats', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(payload)
+                    });
+                    
+                    if (!res.ok) {
+                        const err = await res.json();
+                        throw new Error(err.detail || "Interpretation failed");
+                    }
+                    
+                    // Stream handling
+                    const reader = res.body.getReader();
+                    const decoder = new TextDecoder();
+                    let fullText = '';
+                    
+                    if (interpContent) interpContent.innerHTML = '';
+                    
+                    while (true) {
+                        const { done, value } = await reader.read();
+                        if (done) break;
+                        const chunk = decoder.decode(value);
+                        fullText += chunk;
+                        if (interpContent && window.marked) {
+                             interpContent.innerHTML = window.marked.parse(fullText);
+                        }
+                    }
+                    
+                } catch (e) {
+                    message.error(e.message);
+                    const interpContent = document.getElementById('analysis-interpretation-content');
+                    if (interpContent) interpContent.innerHTML += `<div style="color:red; margin-top:10px;">Error: ${e.message}</div>`;
+                } finally {
+                    setInterpretLoading(false);
+                }
+            };
+
             const handleRun = async (values) => {
                 if (!selectedFile) return message.error("Please select a file first");
                 
@@ -1911,6 +1977,7 @@
                     if (data.error) {
                         message.error(data.error);
                     } else {
+                        setAnalysisDone(true);
                         // Render Result
                         const container = document.getElementById('analysis-results');
                         if (container) {
@@ -2040,9 +2107,55 @@
                             </>
                         )}
 
-                        <Button type="primary" htmlType="submit" loading={loading} block style={{ background: '#3498db' }}>
-                            开始分析 (Run Analysis)
-                        </Button>
+                        {/* AI Interpretation Settings */}
+                        <div style={{ marginBottom: 15, border: '1px solid #f0f0f0', borderRadius: 4, overflow: 'hidden' }}>
+                            <div 
+                                style={{ background: '#fafafa', padding: '8px 12px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
+                                onClick={(e) => {
+                                    const content = e.currentTarget.nextElementSibling;
+                                    content.style.display = content.style.display === 'none' ? 'block' : 'none';
+                                }}
+                            >
+                                <span style={{ fontWeight: 'bold', fontSize: 12 }}><RobotOutlined /> AI 解读设置 (AI Interpretation Settings)</span>
+                                <span style={{ fontSize: 10, color: '#999' }}>Click to expand</span>
+                            </div>
+                            <div style={{ padding: 12, display: 'none' }}>
+                                <Form.Item label="研究目标 (Research Goal)" style={{ marginBottom: 12 }}>
+                                    <Input.TextArea 
+                                        value={researchGoal}
+                                        onChange={e => setResearchGoal(e.target.value)}
+                                        placeholder="e.g. Compare efficacy..."
+                                        rows={2}
+                                    />
+                                </Form.Item>
+                                <Form.Item label="变量定义 (Variable Definitions)" style={{ marginBottom: 0 }}>
+                                    <Input.TextArea 
+                                        value={varDefs}
+                                        onChange={e => setVarDefs(e.target.value)}
+                                        placeholder="e.g. group=1 (Control)..."
+                                        rows={2}
+                                    />
+                                </Form.Item>
+                            </div>
+                        </div>
+
+                        <div style={{ display: 'flex', gap: 10 }}>
+                            <Button type="primary" htmlType="submit" loading={loading} style={{ background: '#3498db', flex: 1 }}>
+                                开始分析 (Run Analysis)
+                            </Button>
+                            <Tooltip title={!analysisDone ? "Please run analysis first (请先运行分析)" : ""}>
+                                <Button 
+                                    type="default" 
+                                    icon={<RobotOutlined style={{ color: !analysisDone ? '#ccc' : '#8e44ad' }} />}
+                                    onClick={handleInterpret}
+                                    loading={interpretLoading}
+                                    disabled={!analysisDone}
+                                    style={{ flex: 1, borderColor: !analysisDone ? '#d9d9d9' : '#8e44ad', color: !analysisDone ? 'rgba(0,0,0,0.25)' : '#8e44ad' }}
+                                >
+                                    AI 智能解读
+                                </Button>
+                            </Tooltip>
+                        </div>
                     </Form>
                 </div>
             );
@@ -2683,21 +2796,34 @@
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify(payload)
                 }).then(async r => {
-                    if (r.ok) return r.blob();
+                    const contentType = r.headers.get("content-type");
+                    if (r.ok) {
+                        if (contentType && contentType.includes("application/json")) {
+                            return r.json().then(data => ({ type: 'json', data }));
+                        } else {
+                            return r.blob().then(blob => ({ type: 'blob', blob }));
+                        }
+                    }
                     const json = await r.json();
                     throw new Error(json.detail || "Error");
                 })
-                  .then(blob => {
+                  .then(res => {
                       hide();
-                      const url = URL.createObjectURL(blob);
-                      const a = document.createElement('a');
-                      a.href = url;
-                      a.download = `plot_${new Date().getTime()}.tiff`;
-                      document.body.appendChild(a);
-                      a.click();
-                      a.remove();
-                      window.URL.revokeObjectURL(url);
-                      message.success("Download started");
+                      if (res.type === 'json') {
+                          // Saved to server
+                          message.success(`Saved to ${res.data.path}`, 5);
+                      } else {
+                          // Download blob (fallback)
+                          const url = URL.createObjectURL(res.blob);
+                          const a = document.createElement('a');
+                          a.href = url;
+                          a.download = `plot_${new Date().getTime()}.tiff`;
+                          document.body.appendChild(a);
+                          a.click();
+                          a.remove();
+                          window.URL.revokeObjectURL(url);
+                          message.success("Download started");
+                      }
                   })
                   .catch(e => {
                       hide();
@@ -3191,6 +3317,10 @@
                                         t={t} 
                                         previewData={previewData}
                                         currentQuota={currentQuota}
+                                        researchGoal={researchGoal}
+                                        setResearchGoal={setResearchGoal}
+                                        varDefs={varDefs}
+                                        setVarDefs={setVarDefs}
                                     />
                                 </div>
                             )}
@@ -3205,7 +3335,17 @@
                                     <Form layout="vertical" form={plotForm} onFinish={handlePlot}>
                                         <div style={{ display: 'flex', gap: 10 }}>
                                             <Form.Item name="plot_type" label={t.plot_type} initialValue="scatter" style={{ flex: 1 }}>
-                                                <Select>
+                                                <Select onChange={() => {
+                                                    // Reset palette if switching to/from heatmap
+                                                    const type = plotForm.getFieldValue('plot_type');
+                                                    const currentPalette = plotForm.getFieldValue('palette');
+                                                    const isHeatmap = type === 'heatmap' || type === 'sig_matrix';
+                                                    const heatmapUnsafe = ["Deep", "Muted", "Pastel", "Bright", "Dark", "Colorblind"];
+                                                    
+                                                    if (isHeatmap && heatmapUnsafe.includes(currentPalette)) {
+                                                        plotForm.setFieldsValue({ palette: "RdBu (Red-Blue)" });
+                                                    }
+                                                }}>
                                                     <Option value="scatter">{t.pt_scatter}</Option>
                                                     <Option value="bar">{t.pt_bar}</Option>
                                                     <Option value="box">{t.pt_box}</Option>
@@ -3221,44 +3361,57 @@
                                                     <Option value="sig_matrix">{t.pt_sig_matrix}</Option>
                                                 </Select>
                                             </Form.Item>
-                                            <Form.Item name="palette" label={t.palette} initialValue="Deep" style={{ flex: 1 }}>
-                                                <Select>
-                                                    <Option value="NPG (Nature)">NPG (Nature)</Option>
-                                                    <Option value="AAAS (Science)">AAAS (Science)</Option>
-                                                    <Option value="NEJM (New England)">NEJM (New England)</Option>
-                                                    <Option value="Lancet">Lancet</Option>
-                                                    <Option value="JAMA">JAMA</Option>
-                                                    <Option value="JCO">JCO</Option>
-                                                    <Option value="UCSC (Genome Browser)">UCSC (Genome Browser)</Option>
-                                                    <Option value="LocusZoom">LocusZoom</Option>
-                                                    <Option value="IGV">IGV</Option>
-                                                    <Option value="D3 (Category10)">D3 (Category10)</Option>
-                                                    <Option value="Okabe-Ito (Colorblind Safe)">Okabe-Ito (Colorblind Safe)</Option>
-                                                    <Option value="Tableau 10">Tableau 10</Option>
-
-                                                    <Option value="Deep">Deep</Option>
-                                                    <Option value="Muted">Muted</Option>
-                                                    <Option value="Pastel">Pastel</Option>
-                                                    <Option value="Bright">Bright</Option>
-                                                    <Option value="Dark">Dark</Option>
-                                                    <Option value="Colorblind">Colorblind</Option>
-
-                                                    <Option value="Viridis">Viridis</Option>
-                                                    <Option value="Magma">Magma</Option>
-                                                    <Option value="Inferno">Inferno</Option>
-                                                    <Option value="Plasma">Plasma</Option>
-                                                    <Option value="CoolWarm">CoolWarm</Option>
-                                                    <Option value="RdBu (Red-Blue)">RdBu (Red-Blue)</Option>
-                                                    <Option value="Spectral">Spectral</Option>
-                                                    <Option value="Blues">Blues</Option>
-                                                    <Option value="Reds">Reds</Option>
-                                                    <Option value="Greens">Greens</Option>
-                                                    <Option value="Greys">Greys</Option>
-                                                    <Option value="Oranges">Oranges</Option>
-                                                    <Option value="Purples">Purples</Option>
-                                                    <Option value="YlOrBr">YlOrBr</Option>
-                                                    <Option value="YlGnBu">YlGnBu</Option>
-                                                </Select>
+                                            <Form.Item shouldUpdate={(prev, curr) => prev.plot_type !== curr.plot_type}>
+                                                {() => {
+                                                    const type = plotForm.getFieldValue('plot_type') || 'scatter';
+                                                    const isHeatmap = type === 'heatmap' || type === 'sig_matrix';
+                                                    
+                                                    return (
+                                                        <Form.Item name="palette" label={t.palette} initialValue="Deep" style={{ flex: 1 }}>
+                                                            <Select>
+                                                                <Option value="NPG (Nature)">NPG (Nature)</Option>
+                                                                <Option value="AAAS (Science)">AAAS (Science)</Option>
+                                                                <Option value="NEJM (New England)">NEJM (New England)</Option>
+                                                                <Option value="Lancet">Lancet</Option>
+                                                                <Option value="JAMA">JAMA</Option>
+                                                                <Option value="JCO">JCO</Option>
+                                                                <Option value="UCSC (Genome Browser)">UCSC (Genome Browser)</Option>
+                                                                <Option value="LocusZoom">LocusZoom</Option>
+                                                                <Option value="IGV">IGV</Option>
+                                                                <Option value="D3 (Category10)">D3 (Category10)</Option>
+                                                                <Option value="Okabe-Ito (Colorblind Safe)">Okabe-Ito (Colorblind Safe)</Option>
+                                                                <Option value="Tableau 10">Tableau 10</Option>
+            
+                                                                {!isHeatmap && (
+                                                                    <>
+                                                                        <Option value="Deep">Deep</Option>
+                                                                        <Option value="Muted">Muted</Option>
+                                                                        <Option value="Pastel">Pastel</Option>
+                                                                        <Option value="Bright">Bright</Option>
+                                                                        <Option value="Dark">Dark</Option>
+                                                                        <Option value="Colorblind">Colorblind</Option>
+                                                                    </>
+                                                                )}
+            
+                                                                <Option value="Viridis">Viridis</Option>
+                                                                <Option value="Magma">Magma</Option>
+                                                                <Option value="Inferno">Inferno</Option>
+                                                                <Option value="Plasma">Plasma</Option>
+                                                                <Option value="CoolWarm">CoolWarm</Option>
+                                                                <Option value="RdBu (Red-Blue)">RdBu (Red-Blue)</Option>
+                                                                <Option value="Spectral">Spectral</Option>
+                                                                <Option value="Blues">Blues</Option>
+                                                                <Option value="Reds">Reds</Option>
+                                                                <Option value="Greens">Greens</Option>
+                                                                <Option value="Greys">Greys</Option>
+                                                                <Option value="Oranges">Oranges</Option>
+                                                                <Option value="Purples">Purples</Option>
+                                                                <Option value="YlOrBr">YlOrBr</Option>
+                                                                <Option value="YlGnBu">YlGnBu</Option>
+                                                            </Select>
+                                                        </Form.Item>
+                                                    );
+                                                }}
                                             </Form.Item>
                                         </div>
 
@@ -3604,8 +3757,15 @@
 
                                     {activeTab === 'analysis' && (
                                         <div style={{height: '100%', overflowY: 'auto', padding: 20}}>
-                                            <div id="analysis-results">
+                                            <div id="analysis-results" style={{ marginBottom: 20 }}>
                                                 <Empty description={t.ws_anal_desc} />
+                                            </div>
+                                            <div id="analysis-interpretation" style={{ padding: 15, background: '#fafafa', border: '1px solid #d9d9d9', borderRadius: 4, display: 'none' }}>
+                                                <div style={{ fontWeight: 'bold', marginBottom: 10, color: '#8e44ad', display: 'flex', alignItems: 'center', gap: 8 }}>
+                                                    <RobotOutlined /> AI Interpretation Result
+                                                    <span style={{fontSize: 12, fontWeight: 'normal', color: '#999'}}>(Generated by LLM)</span>
+                                                </div>
+                                                <div id="analysis-interpretation-content" className="markdown-body" style={{ lineHeight: 1.6 }}></div>
                                             </div>
                                         </div>
                                     )}
